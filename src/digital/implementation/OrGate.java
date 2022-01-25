@@ -51,34 +51,29 @@ public class OrGate implements DeviceInterface{
 	public boolean update() {
 		Value tempValue = inputPort1.getValue();
 		Value tempValue2 = inputPort2.getValue();
+		Value outPort = outputPort.getValue();
+		
 		if (tempValue == Value.FALSE && tempValue2 == Value.FALSE){
 			outputPort.setValue(Value.FALSE);
-			return true;
+			if (outPort != Value.FALSE) {
+				return true;
+			}
 		}
-		if (tempValue == Value.TRUE && tempValue2 == Value.UNKNOWN){
+		else if (tempValue == Value.TRUE || tempValue2 == Value.TRUE){
 			outputPort.setValue(Value.TRUE);
-			return true;
+			if (outPort != Value.TRUE) {
+				return true;
+			}
+
 		}
-		if (tempValue == Value.UNKNOWN && tempValue2 == Value.TRUE){
-			outputPort.setValue(Value.TRUE);
-			return true;
-		}
-		if (tempValue == Value.FALSE && tempValue2 == Value.TRUE){
-			outputPort.setValue(Value.TRUE);
-			return true;
-		}
-		if (tempValue == Value.TRUE && tempValue2 == Value.FALSE){
-			outputPort.setValue(Value.TRUE);
-			return true;
-		}
-		if (tempValue == Value.TRUE && tempValue2 == Value.TRUE){
-			outputPort.setValue(Value.TRUE);
-			return true;
-		}
-		else {
+		else if (tempValue == Value.UNKNOWN || tempValue2 == Value.UNKNOWN) {
 			outputPort.setValue(Value.UNKNOWN);
-			return false;
+			if (outPort != Value.UNKNOWN) {
+				return true;
+			}
 		}
+		return false;
+		
 	}
 
 	@Override
