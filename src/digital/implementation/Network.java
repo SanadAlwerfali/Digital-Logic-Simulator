@@ -123,25 +123,16 @@ public class Network {
 	 * @param consumer An object that is alerted at the end of each clock cycle.
 	 */
 	public void simulate(int clocks, SimulationResultConsumerI consumer) 
-			
 			throws TimeOut {
-		System.out.println("HEYY1");
 		for( int c = 0 ; c < clocks ; ++c ) {
-			System.out.println("HEYY2");
 			for( DeviceInterface d : devices ) d.clock() ;
-			System.out.println("HEYY3");
 			int i = 1000 ;
 			while( i > 0 ) {
-				System.out.println("HEYY4");
 				boolean change = false ;
-				System.out.println("HEYY5");
 				for( NetInterface n : nets ) change = n.update() || change ;
-				System.out.println("HEYY6");
 				for( DeviceInterface d : devices ) change = d.update() || change ;
-				System.out.println("HEYY7");
 				if( ! change ) break ; 
 				i -= 1 ; }
-			System.out.println("HEYY__________");
 			if( i==0 ) throw new TimeOut() ;
 			consumer.finishedCycle( c, getNetIterator() ) ; }
 	}
